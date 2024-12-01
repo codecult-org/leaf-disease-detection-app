@@ -1,6 +1,6 @@
 {
-  "name": "leafDiseaseDetectionApp",
-  "version": "0.0.1",
+  "name": "ldd",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
