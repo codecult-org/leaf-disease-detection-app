@@ -86,21 +86,22 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   scrollView: {
-    padding: 16,
+    padding: 12, // reduced from 16
   },
   header: {
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 16, // reduced from 24
   },
   title: {
-    fontSize: 28,
+    fontSize: 20, // reduced from 28
     fontWeight: 'bold',
     color: darkTheme.text,
     marginBottom: 16,
+    paddingHorizontal: 4,
   },
   accuracyCard: {
     backgroundColor: darkTheme.surface,
-    padding: 16,
+    padding: 12, // reduced from 16
     borderRadius: 12,
     borderWidth: 1,
     borderColor: darkTheme.border,
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   sourceText: {
     textAlign: 'center',
     color: darkTheme.primary,
-    marginTop: 24,
+    marginTop: 16, // reduced from 24
     textDecorationLine: 'underline',
   },
 });

@@ -9,6 +9,7 @@ import {
   Text,
   View,
   ActivityIndicator,
+  Linking,
 } from 'react-native';
 import {Asset} from 'react-native-image-picker';
 import {ImagePicker} from './ImagePicker';
@@ -131,6 +132,11 @@ const Home = () => {
           <Text style={styles.resultText}>Disease: {result}</Text>
         </View>
       )}
+      <TouchableOpacity
+        style={styles.linkContainer}
+        onPress={() => Linking.openURL('https://ldd.sankhadiproy.me/')}>
+        <Text style={styles.linkText}>Try Web Version</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -142,14 +148,14 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
   headerContainer: {
-    padding: 16,
+    padding: 2,
     alignItems: 'center',
   },
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
     color: darkTheme.text,
-    marginVertical: 16,
+    marginVertical: 8,
   },
   buttonContainer: {
     padding: 16,
@@ -188,6 +194,17 @@ const styles = StyleSheet.create({
   errorText: {
     color: darkTheme.error,
     fontSize: 16,
+  },
+  linkContainer: {
+    padding: 16,
+    alignItems: 'center',
+    marginTop: 'auto',
+    marginBottom: 20,
+  },
+  linkText: {
+    color: darkTheme.primary,
+    fontSize: 16,
+    textDecorationLine: 'underline',
   },
 });
 
