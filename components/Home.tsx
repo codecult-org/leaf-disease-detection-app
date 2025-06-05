@@ -129,7 +129,7 @@ const Home = () => {
       )}
       {result && (
         <View style={styles.resultContainer}>
-          <Text style={styles.resultText}>Disease: {result}</Text>
+          <Text style={styles.resultText}>Disease: {result.disease}</Text>
         </View>
       )}
       <TouchableOpacity

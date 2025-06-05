@@ -2,6 +2,7 @@ import * as React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Home from './Home';
 import Info from './Info';
+import Camera from './Camera';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -14,6 +15,7 @@ export function TopTabs() {
         tabBarIndicatorStyle: {backgroundColor: '#fff'},
       }}>
       <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Camera" component={Camera} />
       <Tab.Screen name="Info" component={Info} />
     </Tab.Navigator>
   );
