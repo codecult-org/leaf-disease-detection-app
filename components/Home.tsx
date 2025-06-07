@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import {Asset} from 'react-native-image-picker';
 import {ImagePicker} from './ImagePicker';
+import axios from 'axios';
 
 interface ApiResponse {
   disease: string;
@@ -45,17 +46,6 @@ const Home = () => {
 
     try {
       const formData = new FormData();
-      // Log the file object being sent
-      const fileObject = {
-        uri:
-          Platform.OS === 'android'
-            ? file.uri
-            : file.uri?.replace('file://', ''),
-        type: file.type || 'image/jpeg',
-        name: file.fileName || 'image.jpg',
-      };
-      console.log('File object:', fileObject);
-
       formData.append('file', {
         uri:
           Platform.OS === 'android'
@@ -65,12 +55,11 @@ const Home = () => {
         name: file.fileName || 'image.jpg',
       } as any);
 
-      console.log('Making request to server...');
-      const response = await fetch(
+      console.log('Making request to server with axios...');
+      const response = await axios.post(
         'https://codecult-leaf-serveit.codecult.tech/checking',
+        formData,
         {
-          method: 'POST',
-          body: formData,
           headers: {
             'Content-Type': 'multipart/form-data',
             Accept: 'application/json',
@@ -78,22 +67,14 @@ const Home = () => {
         },
       );
 
-      console.log('Response status:', response.status);
-      const data = await response.json();
-      console.log('Response data:', data);
-
-      if (!response.ok) {
-        throw new Error(
-          data.message || `HTTP error! status: ${response.status}`,
-        );
-      }
-
-      setResult(data);
+      setResult(response.data);
     } catch (error: any) {
-      const errorMessage = error.message || 'Failed to upload image';
-      console.error('Upload error:', error);
+      // console.error('Upload error:', error);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'Failed to upload image';
       setError(errorMessage);
-      Alert.alert('Error', errorMessage);
     } finally {
       setLoading(false);
     }
@@ -129,14 +110,9 @@ const Home = () => {
       )}
       {result && (
         <View style={styles.resultContainer}>
-          <Text style={styles.resultText}>Disease: {result.disease}</Text>
+          <Text style={styles.resultText}>Disease: {result}</Text>
         </View>
       )}
-      <TouchableOpacity
-        style={styles.linkContainer}
-        onPress={() => Linking.openURL('https://ldd.sankhadiproy.me/')}>
-        <Text style={styles.linkText}>Try Web Version</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };
