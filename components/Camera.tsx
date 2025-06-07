@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {launchCamera, CameraOptions, Asset} from 'react-native-image-picker';
 import GoogleCamera from '../assets/google-camera.svg';
+import axios from 'axios';
 
 const darkTheme = {
   background: '#121212',
@@ -76,11 +77,10 @@ const Camera = () => {
         name: file.fileName || 'image.jpg',
       } as any);
 
-      const response = await fetch(
+      const response = await axios.post(
         'https://codecult-leaf-serveit.codecult.tech/checking',
+        formData,
         {
-          method: 'POST',
-          body: formData,
           headers: {
             'Content-Type': 'multipart/form-data',
             Accept: 'application/json',
@@ -88,18 +88,14 @@ const Camera = () => {
         },
       );
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.message || `HTTP error! status: ${response.status}`,
-        );
-      }
-
-      setResult(data.disease || JSON.stringify(data));
+      setResult(response.data.disease || JSON.stringify(response.data));
     } catch (error: any) {
-      setError(error.message || 'Failed to upload image');
-      Alert.alert('Error', error.message || 'Failed to upload image');
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        'Failed to upload image';
+      setError(errorMessage);
+      Alert.alert('Error', errorMessage);
     } finally {
       setLoading(false);
     }
